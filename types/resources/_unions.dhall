@@ -21,6 +21,8 @@
         (./Semver.dhall).version.schema
     | SlackNotification :
         (./SlackNotification.dhall).version.schema
+    | Time :
+        (./Time.dhall).version.schema
     >
 , params =
     { get =
@@ -46,6 +48,8 @@
               (./Semver.dhall).params.get.schema
           | SlackNotify :
               (./SlackNotification.dhall).params.get.schema
+          | Time :
+              (./Time.dhall).params.get.schema
           >
         : Type
     , put =
@@ -71,6 +75,8 @@
               (./Semver.dhall).params.put.schema
           | SlackNotify :
               (./SlackNotification.dhall).params.put.schema
+          | Time :
+              (./Time.dhall).params.put.schema
           >
         : Type
     }
@@ -98,6 +104,8 @@
               (./Semver.dhall).source.schema
           | SlackNotification :
               (./SlackNotification.dhall).source.schema
+          | Time :
+              (./Time.dhall).source.schema
           >
         : Type
     , resource_type =

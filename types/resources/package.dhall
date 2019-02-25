@@ -20,6 +20,8 @@
     ./Semver.dhall
 , SlackNotification =
     ./SlackNotification.dhall
+, Timer =
+    ./Timer.dhall
 , _unions =
     ./_unions.dhall
 }

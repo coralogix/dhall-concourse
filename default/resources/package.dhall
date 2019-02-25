@@ -20,4 +20,6 @@
     ./Semver.dhall
 , SlackNotification =
     ./SlackNotification.dhall
+, Time =
+    ./Time.dhall
 }

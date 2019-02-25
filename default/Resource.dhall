@@ -41,8 +41,12 @@ let getType =
               , SlackNotification =
                     λ(_ : Resources.SlackNotification.source.schema)
                   → Defaults.SlackNotification.meta.name
+              , Time =
+                    λ(_ : Resources.Time.source.schema)
+                  → Defaults.Time.meta.name
+
               }
-        
+
         in  merge handlers source : Text
 
 in    λ(_params : { name : Text, source : ResourceSource })
