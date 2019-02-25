@@ -6,9 +6,21 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "pull-request"
 
-in  { params =
+let repository = "telioss/github-pr-resource"
+
+in  { version =
+          λ(_params : { pr : Text, commit : Text, committed : Optional Text })
+        →   { pr =
+                _params.pr
+            , commit =
+                _params.commit
+            , committed =
+                _params.committed
+            }
+          : GithubPR.version.schema
+    , params =
         { get =
-            { skip_download = None Bool } : GithubPR.get_params
+            { skip_download = None Bool } : GithubPR.params.get.schema
         , put =
               λ(_params : { path : Text })
             →   { path =
@@ -22,7 +34,7 @@ in  { params =
                 , comment_file =
                     None Text
                 }
-              : GithubPR.put_params
+              : GithubPR.params.put.schema
         }
     , source =
           λ(_params : { repository : Text, access_token : Text })
@@ -43,17 +55,15 @@ in  { params =
             , skip_ssl_verification =
                 None Bool
             }
-          : GithubPR.source
+          : GithubPR.source.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name =
-                  "pull-request"
-              , repository =
-                  "telioss/github-pr-resource"
-              }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

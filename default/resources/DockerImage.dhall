@@ -2,7 +2,10 @@ let DockerImage = ../../types/resources/DockerImage.dhall
 
 let name = "docker-image"
 
-in  { params =
+in  { version =
+          λ(_params : { digest : Text })
+        → { digest = _params.digest } : DockerImage.version.schema
+    , params =
         { get =
               { save =
                   None Text
@@ -11,7 +14,7 @@ in  { params =
               , skip_download =
                   None Bool
               }
-            : DockerImage.get_params
+            : DockerImage.params.get.schema
         , put =
               { additional_tags =
                   None Text
@@ -56,7 +59,7 @@ in  { params =
               , target_name =
                   None Text
               }
-            : DockerImage.put_params
+            : DockerImage.params.put.schema
         }
     , source =
           λ(_params : { repository : Text })
@@ -87,7 +90,7 @@ in  { params =
             , max_concurrent_uploads =
                 None Natural
             }
-          : DockerImage.source
+          : DockerImage.source.schema
     , meta =
         { name = name }
     }

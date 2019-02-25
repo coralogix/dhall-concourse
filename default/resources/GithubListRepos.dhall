@@ -6,11 +6,16 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "github-list-repos"
 
-in  { params =
+let repository = "TODO-replaceme/github-list-repos"
+
+in  { version =
+          λ(_params : { hash : Text })
+        → { hash = _params.hash } : GithubListRepos.version.schema
+    , params =
         { get =
-            { output_format = None Text } : GithubListRepos.get_params
+            { output_format = None Text } : GithubListRepos.params.get.schema
         , put =
-            {=} : GithubListRepos.put_params
+            {=} : GithubListRepos.params.put.schema
         }
     , source =
         { exclude =
@@ -26,7 +31,7 @@ in  { params =
                 , exclude =
                     None (List Text)
                 }
-              : GithubListRepos.source_exclude
+              : GithubListRepos.source.exclude.schema
         , include =
               λ ( _params
                 : { auth_token : Text, org : Text, include_regex : Text }
@@ -40,18 +45,16 @@ in  { params =
                 , include_regex =
                     _params.include_regex
                 }
-              : GithubListRepos.source_include
+              : GithubListRepos.source.include.schema
         }
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name =
-                  name
-              , repository =
-                  "TODO-replaceme/github-list-repos"
-              }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

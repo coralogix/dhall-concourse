@@ -24,16 +24,20 @@ let Include =
         }
       : Type
 
-in  { version_schema =
-        { hash : Text }
-    , get_params =
-        { output_format : Optional Text } : Type
-    , put_params =
-        {} : Type
+in  { version =
+        { schema = { hash : Text } }
+    , params =
+        { get =
+            { schema = { output_format : Optional Text } : Type }
+        , put =
+            { schema = {} : Type }
+        }
     , source =
-        < Exclude : Exclude | Include : Include > : Type
-    , source_exclude =
-        Exclude
-    , source_include =
-        Include
+        { schema =
+            < Exclude : Exclude | Include : Include > : Type
+        , exclude =
+            { schema = Exclude }
+        , include =
+            { schema = Include }
+        }
     }

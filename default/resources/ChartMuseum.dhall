@@ -6,9 +6,15 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "chartmuseum"
 
-in  { params =
+let repository = "cathive/concourse-chartmuseum-resource"
+
+in  { version =
+          λ(_params : { version : Text, digest : Text })
+        →   { version = _params.version, digest = _params.digest }
+          : ChartMuseum.version.schema
+    , params =
         { get =
-            { target_basename = None Text } : ChartMuseum.get_params
+            { target_basename = None Text } : ChartMuseum.params.get.schema
         , put =
               λ(_params : { chart : Text })
             →   { chart =
@@ -28,7 +34,7 @@ in  { params =
                 , key_passphrase =
                     None Text
                 }
-              : ChartMuseum.put_params
+              : ChartMuseum.params.put.schema
         }
     , source =
           λ(_params : { server_url : Text, chart_name : Text })
@@ -43,17 +49,15 @@ in  { params =
             , basic_auth_password =
                 None Text
             }
-          : ChartMuseum.source
+          : ChartMuseum.source.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name =
-                  name
-              , repository =
-                  "cathive/concourse-chartmuseum-resource"
-              }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

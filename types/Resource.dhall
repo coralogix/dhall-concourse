@@ -1,6 +1,6 @@
 let Version = ./Version.dhall : Type
 
-let ResourceSource = ./resources/_source.dhall : Type
+let ResourceSource = (./resources/_unions.dhall).source.resource : Type
 
 in    { name :
           Text

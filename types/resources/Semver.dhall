@@ -86,21 +86,35 @@ let Swift =
         }
       : Type
 
-in  { version_schema =
-        { number : Text }
-    , get_params =
-        { bump : Optional Text, pre : Optional Text } : Type
-    , put_params =
-          { file : Optional Text, bump : Optional Text, pre : Optional Text }
-        : Type
+in  { version =
+        { schema = { number : Text } : Type }
+    , params =
+        { get =
+            { schema = { bump : Optional Text, pre : Optional Text } : Type }
+        , put =
+            { schema =
+                  { file :
+                      Optional Text
+                  , bump :
+                      Optional Text
+                  , pre :
+                      Optional Text
+                  }
+                : Type
+            }
+        }
     , source =
-        < GCS : GCS | Git : Git | S3 : S3 | Swift : Swift >
-    , source_gcs =
-        GCS
-    , source_git =
-        Git
-    , source_s3 =
-        S3
-    , source_swift =
-        Swift
+        { schema =
+            < GCS : GCS | Git : Git | S3 : S3 | Swift : Swift > : Type
+        , drivers =
+            { gcs =
+                { schema = GCS : Type }
+            , git =
+                { schema = Git : Type }
+            , s3 =
+                { schema = S3 : Type }
+            , swift =
+                { schema = Swift : Type }
+            }
+        }
     }

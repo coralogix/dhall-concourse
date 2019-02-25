@@ -2,7 +2,9 @@ let Git = ../../types/resources/Git.dhall
 
 let name = "git"
 
-in  { params =
+in  { version =
+        λ(_params : { ref : Text }) → { ref = _params.ref } : Git.version.schema
+    , params =
         { get =
               { depth =
                   None Natural
@@ -19,7 +21,7 @@ in  { params =
               , short_ref_format =
                   None Text
               }
-            : Git.get_params
+            : Git.params.get.schema
         , put =
               λ(_params : { repository : Text })
             →   { repository =
@@ -41,7 +43,7 @@ in  { params =
                 , notes =
                     None Text
                 }
-              : Git.put_params
+              : Git.params.put.schema
         }
     , source =
           λ(_params : { uri : Text, branch : Text })
@@ -87,7 +89,7 @@ in  { params =
                     Optional Text
                 }
             }
-          : Git.source
+          : Git.source.schema
     , meta =
         { name = name }
     }

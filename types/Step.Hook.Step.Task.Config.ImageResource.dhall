@@ -5,10 +5,10 @@ let DockerImage = ./resources/DockerImage.dhall
 in    { type :
           Text
       , params :
-          Optional DockerImage.get_params
+          Optional DockerImage.params.get.schema
       , version :
           Optional Version
       , source :
-          DockerImage.source
+          DockerImage.source.schema
       }
     : Type

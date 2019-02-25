@@ -1,8 +1,8 @@
 let StepHook = ../types/Step.Hook.Step.dhall : Type
 
-let Params = ../types/resources/_put_params.dhall : Type
+let Params = (../types/resources/_unions.dhall).params.put : Type
 
-let GetParams = ../types/resources/_get_params.dhall : Type
+let GetParams = (../types/resources/_unions.dhall).params.get : Type
 
 let Put = ../types/Step.Put.dhall : Type
 

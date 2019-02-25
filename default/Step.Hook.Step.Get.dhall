@@ -1,6 +1,6 @@
 let Version = ../types/Version.dhall : Type
 
-let Params = ../types/resources/_get_params.dhall : Type
+let Params = (../types/resources/_unions.dhall).params.get : Type
 
 let Get = ../types/Step.Hook.Step.Get.dhall : Type
 

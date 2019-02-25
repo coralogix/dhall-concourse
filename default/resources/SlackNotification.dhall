@@ -6,16 +6,20 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "slack-notification"
 
-in  { params =
+let repository = "cfcommunity/slack-notification-resource"
+
+in  { version =
+        {=} : SlackNotification.version.schema
+    , params =
         { get =
-            {=} : SlackNotification.get_params
+            {=} : SlackNotification.params.get.schema
         , put =
               { text =
                   None Text
               , text_file =
                   None Text
               , attachments =
-                  None (List SlackNotification.attachment)
+                  None (List SlackNotification.params.put.attachment.schema)
               , attachments_file =
                   None Text
               , channel =
@@ -35,7 +39,7 @@ in  { params =
               , always_notify =
                   None Bool
               }
-            : SlackNotification.put_params
+            : SlackNotification.params.put.schema
         , attachment =
               λ(_params : { fallback : Text, text : Text })
             →   { fallback =
@@ -70,7 +74,7 @@ in  { params =
                 , ts =
                     None Natural
                 }
-              : SlackNotification.attachment
+              : SlackNotification.params.put.attachment.schema
         }
     , source =
           λ(_params : { url : Text })
@@ -87,17 +91,15 @@ in  { params =
             , ca_certs =
                 None (List { domain : Text, cert : Text })
             }
-          : SlackNotification.source
+          : SlackNotification.source.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name =
-                  name
-              , repository =
-                  "cfcommunity/slack-notification-resource"
-              }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

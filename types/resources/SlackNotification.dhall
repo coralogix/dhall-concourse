@@ -33,52 +33,58 @@ let Attachment =
         }
       : Type
 
-in  { version_schema =
-        {}
-    , get_params =
-        {} : Type
-    , put_params =
-          { text :
-              Optional Text
-          , text_file :
-              Optional Text
-          , attachments :
-              Optional (List Attachment)
-          , attachments_file :
-              Optional Text
-          , channel :
-              Optional Text
-          , channel_file :
-              Optional Text
-          , env_file :
-              Optional Text
-          , username :
-              Optional Text
-          , icon_url :
-              Optional Text
-          , icon_emoji :
-              Optional Text
-          , silent :
-              Optional Bool
-          , always_notify :
-              Optional Bool
-          }
-        : Type
-    , attachment =
-        Attachment
+in  { version =
+        { schema = {} : Type }
+    , params =
+        { get =
+            { schema = {} : Type }
+        , put =
+            { schema =
+                  { text :
+                      Optional Text
+                  , text_file :
+                      Optional Text
+                  , attachments :
+                      Optional (List Attachment)
+                  , attachments_file :
+                      Optional Text
+                  , channel :
+                      Optional Text
+                  , channel_file :
+                      Optional Text
+                  , env_file :
+                      Optional Text
+                  , username :
+                      Optional Text
+                  , icon_url :
+                      Optional Text
+                  , icon_emoji :
+                      Optional Text
+                  , silent :
+                      Optional Bool
+                  , always_notify :
+                      Optional Bool
+                  }
+                : Type
+            , attachment =
+                { schema = Attachment : Type }
+            }
+        }
     , source =
-          { url :
-              Text
-          , insecure :
-              Optional Bool
-          , proxy :
-              Optional Text
-          , proxy_https_tunnel :
-              Optional Bool
-          , disable :
-              Optional Bool
-          , ca_certs :
-              Optional (List { domain : Text, cert : Text })
-          }
-        : Type
+        { schema =
+              { url :
+                  Text
+              , insecure :
+                  Optional Bool
+              , proxy :
+                  Optional Text
+              , proxy_https_tunnel :
+                  Optional Bool
+              , disable :
+                  Optional Bool
+              , ca_certs :
+                  Optional (List { domain : Text, cert : Text })
+              }
+            : Type
+        }
     }

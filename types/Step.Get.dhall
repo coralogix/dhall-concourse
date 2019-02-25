@@ -2,7 +2,7 @@ let Version = ./Version.dhall : Type
 
 let StepHook = ./Step.Hook.Step.dhall : Type
 
-let Params = ./resources/_get_params.dhall : Type
+let Params = (./resources/_unions.dhall).params.get : Type
 
 in    { get :
           Text

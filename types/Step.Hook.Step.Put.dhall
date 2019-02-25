@@ -1,6 +1,6 @@
-let Params = ./resources/_put_params.dhall : Type
+let Params = (./resources/_unions.dhall).params.put : Type
 
-let GetParams = ./resources/_get_params.dhall : Type
+let GetParams = (./resources/_unions.dhall).params.get : Type
 
 in    { put :
           Text

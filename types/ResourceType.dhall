@@ -1,4 +1,4 @@
-let Source = ./resources/_resource_type_sources.dhall
+let Source = (./resources/_unions.dhall).source.resource_type
 
 in    { name :
           Text

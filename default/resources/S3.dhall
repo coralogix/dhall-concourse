@@ -2,9 +2,13 @@ let S3 = ../../types/resources/S3.dhall
 
 let name = "s3"
 
-in  { params =
+in  { version =
+          λ(_params : { version_id : Text })
+        → { version_id = _params.version_id } : S3.version.schema
+    , params =
         { get =
-            { skip_download = None Bool, unpack = None Bool } : S3.get_params
+              { skip_download = None Bool, unpack = None Bool }
+            : S3.params.get.schema
         , put =
               λ(_params : { file : Text })
             →   { file =
@@ -14,7 +18,7 @@ in  { params =
                 , content_type =
                     None Text
                 }
-              : S3.put_params
+              : S3.params.put.schema
         }
     , source =
           λ(_params : { bucket : Text })
@@ -61,7 +65,7 @@ in  { params =
             , initial_content_binary =
                 None Text
             }
-          : S3.source
+          : S3.source.schema
     , meta =
         { name = name }
     }

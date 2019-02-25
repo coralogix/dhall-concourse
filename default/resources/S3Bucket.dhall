@@ -6,8 +6,16 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "s3bucket"
 
-in  { params =
-        { get = {=} : S3Bucket.get_params, put = {=} : S3Bucket.put_params }
+let repository = "18fgsa/s3-resource-simple"
+
+in  { version =
+        {=} : S3Bucket.version.schema
+    , params =
+        { get =
+            {=} : S3Bucket.params.get.schema
+        , put =
+            {=} : S3Bucket.params.put.schema
+        }
     , source =
           λ(_params : { bucket : Text })
         →   { bucket =
@@ -23,13 +31,15 @@ in  { params =
             , region =
                 None Text
             }
-          : S3Bucket.source
+          : S3Bucket.source.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name = name, repository = "18fgsa/s3-resource-simple" }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

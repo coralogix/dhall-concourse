@@ -1,6 +1,6 @@
 let Version = ../types/Version.dhall : Type
 
-let ResourceSource = ../types/resources/_source.dhall : Type
+let ResourceSource = (../types/resources/_unions.dhall).source.resource : Type
 
 let Resources = ../types/resources/package.dhall
 
@@ -12,31 +12,34 @@ let getType =
         λ(source : ResourceSource)
       → let handlers =
               { ChartMuseum =
-                    λ(_ : Resources.ChartMuseum.source)
+                    λ(_ : Resources.ChartMuseum.source.schema)
                   → Defaults.ChartMuseum.meta.name
               , ConcoursePipeline =
-                    λ(_ : Resources.ConcoursePipeline.source)
+                    λ(_ : Resources.ConcoursePipeline.source.schema)
                   → Defaults.ConcoursePipeline.meta.name
               , DockerImage =
-                    λ(_ : Resources.DockerImage.source)
+                    λ(_ : Resources.DockerImage.source.schema)
                   → Defaults.DockerImage.meta.name
               , Git =
-                  λ(_ : Resources.Git.source) → Defaults.Git.meta.name
+                  λ(_ : Resources.Git.source.schema) → Defaults.Git.meta.name
               , GithubListRepos =
-                    λ(_ : Resources.GithubListRepos.source)
+                    λ(_ : Resources.GithubListRepos.source.schema)
                   → Defaults.GithubListRepos.meta.name
               , GithubPR =
-                  λ(_ : Resources.GithubPR.source) → Defaults.GithubPR.meta.name
+                    λ(_ : Resources.GithubPR.source.schema)
+                  → Defaults.GithubPR.meta.name
               , Helm =
-                  λ(_ : Resources.Helm.source) → Defaults.Helm.meta.name
+                  λ(_ : Resources.Helm.source.schema) → Defaults.Helm.meta.name
               , S3 =
-                  λ(_ : Resources.S3.source) → Defaults.S3.meta.name
+                  λ(_ : Resources.S3.source.schema) → Defaults.S3.meta.name
               , S3Bucket =
-                  λ(_ : Resources.S3Bucket.source) → Defaults.S3Bucket.meta.name
+                    λ(_ : Resources.S3Bucket.source.schema)
+                  → Defaults.S3Bucket.meta.name
               , Semver =
-                  λ(_ : Resources.Semver.source) → Defaults.Semver.meta.name
+                    λ(_ : Resources.Semver.source.schema)
+                  → Defaults.Semver.meta.name
               , SlackNotification =
-                    λ(_ : Resources.SlackNotification.source)
+                    λ(_ : Resources.SlackNotification.source.schema)
                   → Defaults.SlackNotification.meta.name
               }
         

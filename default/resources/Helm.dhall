@@ -6,9 +6,15 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "helm"
 
-in  { params =
+let repository = "linkyard/concourse-helm-resource"
+
+in  { version =
+          λ(_params : { revision : Text, release : Text })
+        →   { revision = _params.revision, release = _params.release }
+          : Helm.version.schema
+    , params =
         { get =
-            {=} : Helm.get_params
+            {=} : Helm.params.get.schema
         , put =
               λ(_params : { chart : Text })
             →   { chart =
@@ -18,7 +24,7 @@ in  { params =
                 , release =
                     None Text
                 , values =
-                    None Helm.put_params_values
+                    None Helm.params.put.values.schema
                 , override_values =
                     None
                     ( List
@@ -63,7 +69,7 @@ in  { params =
                 , reuse_values =
                     None Bool
                 }
-              : Helm.put_params
+              : Helm.params.put.schema
         }
     , source =
           λ(_params : { cluster_url : Text })
@@ -117,13 +123,15 @@ in  { params =
             , tiller_key =
                 None Text
             }
-          : Helm.source
+          : Helm.source.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name = name, repository = "linkyard/concourse-helm-resource" }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

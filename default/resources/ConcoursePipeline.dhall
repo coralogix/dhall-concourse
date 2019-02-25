@@ -6,22 +6,29 @@ let mkResourceType = ../ResourceType.dhall
 
 let name = "concourse-pipeline"
 
-in  { params =
+let repository = "concourse/concourse-pipeline-resource"
+
+in  { version =
+          λ(_params : { mapKey : Text, mapValue : Text })
+        →   { mapKey = _params.mapKey, mapValue = _params.mapValue }
+          : ConcoursePipeline.version.schema
+    , params =
         { get =
-            {=} : ConcoursePipeline.get_params
+            {=} : ConcoursePipeline.params.get.schema
         , put =
             { dynamic =
                   λ(_params : { pipelines_file : Text })
                 →   { pipelines_file = _params.pipelines_file }
-                  : ConcoursePipeline.put_params_dynamic
+                  : ConcoursePipeline.params.put.dynamic.schema
             , static =
                   λ ( _params
                     : { pipelines :
-                          List ConcoursePipeline.put_params_static_pipeline
+                          List
+                          ConcoursePipeline.params.put.static.pipeline.schema
                       }
                     )
                 →   { pipelines = _params.pipelines }
-                  : ConcoursePipeline.put_params_static
+                  : ConcoursePipeline.params.put.static.schema
             , static_pipeline =
                   λ(_params : { name : Text, team : Text, config_file : Text })
                 →   { name =
@@ -35,27 +42,25 @@ in  { params =
                     , unpaused =
                         None Bool
                     }
-                  : ConcoursePipeline.put_params_static_pipeline
+                  : ConcoursePipeline.params.put.static.pipeline.schema
             }
         }
     , source =
-          λ(_params : { teams : List ConcoursePipeline.source_team })
+          λ(_params : { teams : List ConcoursePipeline.source.team.schema })
         →   { target = None Text, insecure = None Bool, teams = _params.teams }
-          : ConcoursePipeline.source
+          : ConcoursePipeline.source.schema
     , source_team =
           λ(_params : { name : Text })
         →   { name = _params.name, username = None Text, password = None Text }
-          : ConcoursePipeline.source_team
+          : ConcoursePipeline.source.team.schema
     , meta =
         { name =
             name
+        , repository =
+            repository
         , resource_type =
               mkResourceType.DockerImage
-              { name =
-                  name
-              , repository =
-                  "concourse/concourse-pipeline-resource"
-              }
+              { name = name, repository = repository }
             : ResourceType
         }
     }

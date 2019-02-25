@@ -2,7 +2,7 @@ let Version = ../types/Version.dhall : Type
 
 let StepHook = ../types/Step.Hook.Step.dhall : Type
 
-let Params = ../types/resources/_get_params.dhall : Type
+let Params = (../types/resources/_unions.dhall).params.get : Type
 
 let Get = ../types/Step.Get.dhall : Type
 
