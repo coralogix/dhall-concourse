@@ -1,12 +1,18 @@
 let GithubListRepos = ../../types/resources/GithubListRepos.dhall
 
+let DockerImage = ../../types/resources/DockerImage.dhall
+
+let Source = (../../types/resources/_unions.dhall).source.resource_type
+
 let ResourceType = ../../types/ResourceType.dhall
 
 let mkResourceType = ../ResourceType.dhall
 
 let name = "github-list-repos"
 
-let repository = "TODO-replaceme/github-list-repos"
+let repository = "quay.io/coralogix/concourse-resource-github-list-repos"
+
+let image_tag = "v0.3.1"
 
 in  { version =
           λ(_params : { hash : Text })
@@ -52,9 +58,25 @@ in  { version =
             name
         , repository =
             repository
+        , image_tag =
+            image_tag
         , resource_type =
-              mkResourceType.DockerImage
-              { name = name, repository = repository }
-            : ResourceType
+            let default =
+                  mkResourceType.DockerImage
+                  { name = name, repository = repository }
+            
+            in      default
+                  ⫽ { source =
+                        Source.DockerImage
+                        ( merge
+                          { DockerImage =
+                                λ(original : DockerImage.source.schema)
+                              →   original ⫽ { tag = Some image_tag }
+                                : DockerImage.source.schema
+                          }
+                          default.source
+                        )
+                    }
+                : ResourceType
         }
     }

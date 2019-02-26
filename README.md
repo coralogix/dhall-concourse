@@ -10,8 +10,8 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 
 ## Install
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.0/default/package.dhall sha256:0de9b0697eab2abd39f3948422153f720f34b3e0a7d7691399f373b3b5e151c5
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.0/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/default/package.dhall sha256:af0af9991d74e52ef570dc9e9ea7bea3a0b34158ccf677e34945babe98c64b4a
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
 ```
 
 ## Usage
@@ -20,10 +20,10 @@ For example - generating the documentation's smallest pipeline example:
 -- hello-world-pipeline.dhall
 
 let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.0/default/package.dhall sha256:0de9b0697eab2abd39f3948422153f720f34b3e0a7d7691399f373b3b5e151c5
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/default/package.dhall sha256:af0af9991d74e52ef570dc9e9ea7bea3a0b34158ccf677e34945babe98c64b4a
 
 let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.0/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
 
 in  Concourse.Pipeline
     { jobs =
@@ -66,8 +66,9 @@ dhall-to-yaml --omitNull <<< './hello-world-pipeline.dhall' > hello-world-pipeli
 fly -t main set-pipeline -p hello-world -c ./hello-world-pipeline.yaml 
 ```
 
-## Maintainer
+## Maintainers
 [Ari Becker](https://github.com/ari-becker)
+[Oded David](https://github.com/oded-dd)
 
 ## Contributing
 TBD
