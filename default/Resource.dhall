@@ -30,6 +30,9 @@ let getType =
                   → Defaults.GithubPR.meta.name
               , Helm =
                   λ(_ : Resources.Helm.source.schema) → Defaults.Helm.meta.name
+              , RegistryImage =
+                    λ(_ : Resources.RegistryImage.source.schema)
+                  → Defaults.RegistryImage.meta.name
               , S3 =
                   λ(_ : Resources.S3.source.schema) → Defaults.S3.meta.name
               , S3Bucket =

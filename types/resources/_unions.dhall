@@ -13,6 +13,8 @@
         (./GithubPR.dhall).version.schema
     | Helm :
         (./Helm.dhall).version.schema
+    | RegistryImage :
+        (./RegistryImage.dhall).version.schema
     | S3 :
         (./S3.dhall).version.schema
     | S3Bucket :
@@ -38,6 +40,8 @@
               (./GithubPR.dhall).params.get.schema
           | Helm :
               (./Helm.dhall).params.get.schema
+          | RegistryImage :
+              (./RegistryImage.dhall).params.get.schema
           | S3 :
               (./S3.dhall).params.get.schema
           | S3Bucket :
@@ -63,6 +67,8 @@
               (./GithubPR.dhall).params.put.schema
           | Helm :
               (./Helm.dhall).params.put.schema
+          | RegistryImage :
+              (./RegistryImage.dhall).params.put.schema
           | S3 :
               (./S3.dhall).params.put.schema
           | S3Bucket :
@@ -90,6 +96,8 @@
               (./GithubPR.dhall).source.schema
           | Helm :
               (./Helm.dhall).source.schema
+          | RegistryImage :
+              (./RegistryImage.dhall).source.schema
           | S3 :
               (./S3.dhall).source.schema
           | S3Bucket :
@@ -100,7 +108,5 @@
               (./SlackNotification.dhall).source.schema
           >
         : Type
-    , resource_type =
-        < DockerImage : (./DockerImage.dhall).source.schema > : Type
     }
 }

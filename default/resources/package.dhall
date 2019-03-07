@@ -12,6 +12,8 @@
     ./GithubPR.dhall
 , Helm =
     ./Helm.dhall
+, RegistryImage =
+    ./RegistryImage.dhall
 , S3 =
     ./S3.dhall
 , S3Bucket =

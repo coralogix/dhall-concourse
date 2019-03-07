@@ -2,7 +2,7 @@ let GithubListRepos = ../../types/resources/GithubListRepos.dhall
 
 let DockerImage = ../../types/resources/DockerImage.dhall
 
-let Source = (../../types/resources/_unions.dhall).source.resource_type
+let RegistryImage = ../../types/resources/RegistryImage.dhall
 
 let ResourceType = ../../types/ResourceType.dhall
 
@@ -61,22 +61,26 @@ in  { version =
         , image_tag =
             image_tag
         , resource_type =
-            let default =
-                  mkResourceType.DockerImage
-                  { name = name, repository = repository }
-            
-            in      default
-                  ⫽ { source =
-                        Source.DockerImage
-                        ( merge
-                          { DockerImage =
-                                λ(original : DockerImage.source.schema)
-                              →   original ⫽ { tag = Some image_tag }
-                                : DockerImage.source.schema
-                          }
-                          default.source
-                        )
-                    }
-                : ResourceType
+            { docker =
+                ResourceType.schema.DockerImage
+                ( let default =
+                        mkResourceType.DockerImage
+                        { name = name, repository = repository }
+                  
+                  in      default
+                        ⫽ { source = default.source ⫽ { tag = Some image_tag } }
+                      : ResourceType.docker-image.schema
+                )
+            , registry =
+                ResourceType.schema.RegistryImage
+                ( let default =
+                        mkResourceType.RegistryImage
+                        { name = name, repository = repository }
+                  
+                  in      default
+                        ⫽ { source = default.source ⫽ { tag = Some image_tag } }
+                      : ResourceType.registry-image.schema
+                )
+            }
         }
     }

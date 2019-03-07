@@ -22,6 +22,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 * Github List Repos - [`coralogix/eng-concourse-resource-github-list-repos`](https://github.com/coralogix/eng-concourse-resource-github-list-repos)
 * Github PR - [`telia-oss/github-pr-resource`](https://github.com/telia-oss/github-pr-resource)
 * Helm - [`linkyard/concourse-helm-resource`](https://github.com/linkyard/concourse-helm-resource)
+* Registry Image - [`concourse/registry-image-resource`](https://github.com/concourse/registry-image-resource)
 * S3 - [`concourse/s3-resource`](https://github.com/concourse/s3-resource)
 * S3 Bucket - [`18F/s3-resource-simple`](https://github.com/18F/s3-resource-simple)
 * Semver - [`concourse/semver-resource`](https://github.com/concourse/semver-resource)
@@ -30,8 +31,8 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 ## Install
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/default/package.dhall sha256:af0af9991d74e52ef570dc9e9ea7bea3a0b34158ccf677e34945babe98c64b4a
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:abf762790868eae1b23cbaaa68d727c035348c4945e9471c2d8114918bc9a5ed
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:2eed1cee33b473b1304fad3054da2facc2293b75d7786d991e461669bf305b6a
 ```
 
 ## Usage
@@ -40,10 +41,10 @@ For example - generating the documentation's smallest pipeline example:
 -- hello-world-pipeline.dhall
 
 let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/default/package.dhall sha256:af0af9991d74e52ef570dc9e9ea7bea3a0b34158ccf677e34945babe98c64b4a
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:abf762790868eae1b23cbaaa68d727c035348c4945e9471c2d8114918bc9a5ed
 
 let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.1.1/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:2eed1cee33b473b1304fad3054da2facc2293b75d7786d991e461669bf305b6a
 
 in  Concourse.Pipeline
     { jobs =
@@ -52,7 +53,8 @@ in  Concourse.Pipeline
               "hello-world"
           , plan =
               [ ConcourseTypes.Step.Task
-                (   Concourse.Task { task = "say-hello" }
+                (   Concourse.Task
+                    { task = "say-hello" }
                   ⫽ { config =
                         Some
                         (   Concourse.TaskConfig
@@ -64,12 +66,10 @@ in  Concourse.Pipeline
                             }
                           ⫽ { image_resource =
                                 Some
-                                ( Concourse.TaskConfigImageResource
-                                  { type =
-                                      "docker-image"
-                                  , repository =
-                                      "alpine"
-                                  }
+                                ( ConcourseTypes.TaskConfigImageResource.schema.DockerImage
+                                  ( Concourse.TaskConfigDockerImageResource
+                                    { repository = "alpine" }
+                                  )
                                 )
                             }
                         )

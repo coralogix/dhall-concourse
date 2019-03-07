@@ -4,12 +4,11 @@ let DockerImage = ../types/resources/DockerImage.dhall
 
 let mkDockerImage = ./resources/DockerImage.dhall
 
-let ImageResource =
-      ../types/Step.Hook.Step.Task.Config.ImageResource.dhall : Type
+let ImageResource = ../types/Step.Task.Config.ImageResource.dhall
 
-in    λ(_params : { type : Text, repository : Text })
+in    λ(_params : { repository : Text })
     →   { type =
-            _params.type
+            "docker-image"
         , params =
             None DockerImage.params.get.schema
         , version =
@@ -18,4 +17,4 @@ in    λ(_params : { type : Text, repository : Text })
               mkDockerImage.source { repository = _params.repository }
             : DockerImage.source.schema
         }
-      : ImageResource
+      : ImageResource.docker-image.schema

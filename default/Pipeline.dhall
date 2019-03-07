@@ -2,7 +2,7 @@ let Job = ../types/Job.dhall : Type
 
 let Resource = ../types/Resource.dhall : Type
 
-let ResourceType = ../types/ResourceType.dhall : Type
+let ResourceType = ../types/ResourceType.dhall
 
 let JobGroup = ../types/JobGroup.dhall : Type
 
@@ -14,7 +14,7 @@ in    λ(_params : { jobs : List Job })
         , resources =
             None (List Resource)
         , resource_types =
-            None (List ResourceType)
+            None (List ResourceType.schema)
         , groups =
             None (List JobGroup)
         }

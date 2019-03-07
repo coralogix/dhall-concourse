@@ -20,8 +20,10 @@
     ./Step.Hook.Step.Task.Config.Cache.dhall
 , HookTaskConfig =
     ./Step.Hook.Step.Task.Config.dhall
-, HookTaskConfigImageResource =
-    ./Step.Hook.Step.Task.Config.ImageResource.dhall
+, HookTaskConfigDockerImageResource =
+    ./Step.Hook.Step.Task.Config.ImageResource.DockerImage.dhall
+, HookTaskConfigRegistryImageResource =
+    ./Step.Hook.Step.Task.Config.ImageResource.RegistryImage.dhall
 , HookTaskConfigInput =
     ./Step.Hook.Step.Task.Config.Input.dhall
 , HookTaskConfigOutput =
@@ -36,8 +38,10 @@
     ./Step.Task.Config.Cache.dhall
 , TaskConfig =
     ./Step.Task.Config.dhall
-, TaskConfigImageResource =
-    ./Step.Task.Config.ImageResource.dhall
+, TaskConfigDockerImageResource =
+    ./Step.Task.Config.ImageResource.DockerImage.dhall
+, TaskConfigRegistryImageResource =
+    ./Step.Task.Config.ImageResource.RegistryImage.dhall
 , TaskConfigInput =
     ./Step.Task.Config.Input.dhall
 , TaskConfigOutput =

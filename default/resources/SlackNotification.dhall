@@ -98,8 +98,16 @@ in  { version =
         , repository =
             repository
         , resource_type =
-              mkResourceType.DockerImage
-              { name = name, repository = repository }
-            : ResourceType
+            { docker =
+                ResourceType.schema.DockerImage
+                ( mkResourceType.DockerImage
+                  { name = name, repository = repository }
+                )
+            , registry =
+                ResourceType.schema.DockerImage
+                ( mkResourceType.DockerImage
+                  { name = name, repository = repository }
+                )
+            }
         }
     }
