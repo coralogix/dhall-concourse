@@ -1,5 +1,9 @@
 { resources =
     ./resources/package.dhall
+, Aggregate =
+    ./Step.Aggregate.dhall
+, Do =
+    ./Step.Do.dhall
 , Job =
     ./Job.dhall
 , JobGroup =
@@ -12,6 +16,10 @@
     ./ResourceType.dhall
 , Get =
     ./Step.Get.dhall
+, HookAggregate =
+    ./Step.Hook.Step.Aggregate.dhall
+, HookDo =
+    ./Step.Hook.Step.Do.dhall
 , HookGet =
     ./Step.Hook.Step.Get.dhall
 , HookPut =
@@ -32,6 +40,8 @@
     ./Step.Hook.Step.Task.Config.Run.dhall
 , HookTask =
     ./Step.Hook.Step.Task.dhall
+, HookTry =
+    ./Step.Hook.Step.Try.dhall
 , Put =
     ./Step.Put.dhall
 , TaskConfigCache =
@@ -50,6 +60,8 @@
     ./Step.Task.Config.Run.dhall
 , Task =
     ./Step.Task.dhall
+, Try =
+    ./Step.Try.dhall
 , Version =
     ./Version.dhall
 }

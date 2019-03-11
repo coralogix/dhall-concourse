@@ -9,10 +9,10 @@ This repository includes types, default records, and functions that produce defa
 This allows the user to more easily generate type-safe Concourse CI pipelines, through the use of the Dhall project's `dhall-to-yaml` tool.
 
 ### Limitations
-* Various steps have not yet been incorporated into the model: `aggregate`, `do`, and `try`.
 * Various step modifiers have not yet been incorporated into the model: `tags`, `timeout`, and `attempts`.
 * Resources need to be added to the project to be usable. From the benefit of experience of the maintainers, this seems to ultimately be the result of Dhall not (yet) supporting dependent types, and cannot be worked around at this time without losing type safety for each Resource's source, get parameters, and put parameters' types. As a result, this project violates Concourse's [`contributor-burden`](https://github.com/concourse/concourse/wiki/Anti-Patterns#contributor-burden) anti-pattern, and is unlikely to become an official Concourse project. Users who wish to use resources not included in the project are encouraged to open pull requests.
 * The Concourse pipeline models `Step`s as recursive types, as each `Step` record has fields `on_success`, `on_failure`, `on_abort`, and `ensure` of type `Step`. While there is an official [guide](https://github.com/dhall-lang/dhall-lang/wiki/How-to-translate-recursive-code-to-Dhall) that documents a strategy for implementing a recursive type within Dhall's restrictions, currently `dhall-concourse` does not adopt that strategy. Instead, a `Step` has fields of type `StepHook`, and `StepHook`s do not have recursive fields. For the time being, this addresses most use cases while presenting a more-easily addressable API to the user. The project is open to pull requests that offer an additional level of recursion, and may adopt the official strategy for transforming recursive code in the future.
+* There is limited support for the `aggregate`, `do`, and `try` steps. They may be used as "parent steps" for `get`, `put`, and `task` steps under a Job's plan, and under the `on_success`, `on_failure`, `on_abort`, and `ensure` step hooks. Structures like an `aggregate` step having a list of `try` steps is not currently supported, and it is not likely that support for such structures will be introduced until a solution can be found for introducing a recursive step model into the types. 
 
 ### Supported Resources
 * ChartMuseum - [`cathive/concourse-chartmuseum-resource`](https://github.com/cathive/concourse-chartmuseum-resource)
@@ -31,8 +31,8 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 ## Install
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:abf762790868eae1b23cbaaa68d727c035348c4945e9471c2d8114918bc9a5ed
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:2eed1cee33b473b1304fad3054da2facc2293b75d7786d991e461669bf305b6a
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
 ```
 
 ## Usage
@@ -41,10 +41,10 @@ For example - generating the documentation's smallest pipeline example:
 -- hello-world-pipeline.dhall
 
 let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:abf762790868eae1b23cbaaa68d727c035348c4945e9471c2d8114918bc9a5ed
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
 
 let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:2eed1cee33b473b1304fad3054da2facc2293b75d7786d991e461669bf305b6a
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
 
 in  Concourse.Pipeline
     { jobs =
@@ -52,7 +52,7 @@ in  Concourse.Pipeline
           { name =
               "hello-world"
           , plan =
-              [ ConcourseTypes.Step.Task
+              [ ConcourseTypes.StepBox.Task
                 (   Concourse.Task
                     { task = "say-hello" }
                   ⫽ { config =

@@ -1,4 +1,4 @@
-let StepHook = ./Step.Hook.Step.dhall : Type
+let StepHook = ./Step.Hook.Step.Box.dhall : Type
 
 let Params = (./resources/_unions.dhall).params.put : Type
 

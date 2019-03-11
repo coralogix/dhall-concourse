@@ -6,9 +6,9 @@ let mkRegistryImage = ./resources/RegistryImage.dhall
 
 let ImageResource = ../types/Step.Hook.Step.Task.Config.ImageResource.dhall
 
-in    λ(_params : { type : Text, repository : Text })
+in    λ(_params : { repository : Text })
     →   { type =
-            _params.type
+            mkRegistryImage.meta.name
         , params =
             None RegistryImage.params.get.schema
         , version =

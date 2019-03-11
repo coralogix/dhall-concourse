@@ -1,9 +1,9 @@
-let Step = ./Step.dhall : Type
+let StepBox = ./Step.Box.dhall : Type
 
 in    { name :
           Text
       , plan :
-          List Step
+          List StepBox
       , serial :
           Optional Bool
       , build_logs_to_retain :
@@ -19,12 +19,12 @@ in    { name :
       , interruptible :
           Optional Bool
       , on_success :
-          Optional Step
+          Optional StepBox
       , on_failure :
-          Optional Step
+          Optional StepBox
       , on_abort :
-          Optional Step
+          Optional StepBox
       , ensure :
-          Optional Step
+          Optional StepBox
       }
     : Type

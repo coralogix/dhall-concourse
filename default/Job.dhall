@@ -1,4 +1,4 @@
-let Step = ../types/Step.dhall : Type
+let Step = ../types/Step.Box.dhall : Type
 
 let Job = ../types/Job.dhall : Type
 

@@ -12,10 +12,14 @@
     ./ResourceType.dhall
 , Step =
     ./Step.dhall
+, StepBox =
+    ./Step.Box.dhall
 , Get =
     ./Step.Get.dhall
 , Hook =
     ./Step.Hook.Step.dhall
+, HookBox =
+    ./Step.Hook.Step.Box.dhall
 , HookGet =
     ./Step.Hook.Step.Get.dhall
 , HookPut =

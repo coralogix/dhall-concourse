@@ -1,6 +1,6 @@
 let Config = ../types/Step.Task.Config.dhall : Type
 
-let StepHook = ../types/Step.Hook.Step.dhall : Type
+let StepHook = ../types/Step.Hook.Step.Box.dhall : Type
 
 let Task = ../types/Step.Task.dhall : Type
 

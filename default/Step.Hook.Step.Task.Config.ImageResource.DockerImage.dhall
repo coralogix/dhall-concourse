@@ -6,9 +6,9 @@ let mkDockerImage = ./resources/DockerImage.dhall
 
 let ImageResource = ../types/Step.Hook.Step.Task.Config.ImageResource.dhall
 
-in    λ(_params : { type : Text, repository : Text })
+in    λ(_params : { repository : Text })
     →   { type =
-            _params.type
+            mkDockerImage.meta.name
         , params =
             None DockerImage.params.get.schema
         , version =
