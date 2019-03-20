@@ -41,10 +41,10 @@ For example - generating the documentation's smallest pipeline example:
 -- hello-world-pipeline.dhall
 
 let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
 
 let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.2.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
 
 in  Concourse.Pipeline
     { jobs =
