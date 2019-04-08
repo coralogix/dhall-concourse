@@ -4,6 +4,13 @@
 
 > Dhall types for Concourse
 
+## Notice
+The project is dormant 
+
+Profiling is now 40+ minutes, and 10+ Gi of memory, due to 6+ nested unions are not handled performantly by the Haskell reference implementation.
+
+## Description
+
 This repository includes types, default records, and functions that produce default records in the [Dhall language](https://github.com/dhall-lang/dhall-lang) which model the Concourse CI pipeline domain. They are based off the [Concourse CI documentation reference](https://concourse-ci.org/pipelines.html).
 
 This allows the user to more easily generate type-safe Concourse CI pipelines, through the use of the Dhall project's `dhall-to-yaml` tool.
@@ -31,8 +38,8 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 ## Install
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:0de9b0697eab2abd39f3948422153f720f34b3e0a7d7691399f373b3b5e151c5
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
 ```
 
 ## Usage
@@ -41,10 +48,10 @@ For example - generating the documentation's smallest pipeline example:
 -- hello-world-pipeline.dhall
 
 let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:0de9b0697eab2abd39f3948422153f720f34b3e0a7d7691399f373b3b5e151c5
 
 let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
+      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:d4c2059f128ca433eb6964d5215b129b6772d1383f8172461a6828fd9e225cb6
 
 in  Concourse.Pipeline
     { jobs =
