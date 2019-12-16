@@ -7,21 +7,13 @@ let GetParams = (../types/resources/_unions.dhall).params.get : Type
 let Put = ../types/Step.Put.dhall : Type
 
 in    λ(_params : { put : Text })
-    →   { put =
-            _params.put
-        , resource =
-            None Text
-        , params =
-            None Params
-        , get_params =
-            None GetParams
-        , on_success =
-            None StepHook
-        , on_failure =
-            None StepHook
-        , on_abort =
-            None StepHook
-        , ensure =
-            None StepHook
+    →   { put = _params.put
+        , resource = None Text
+        , params = None Params
+        , get_params = None GetParams
+        , on_success = None StepHook
+        , on_failure = None StepHook
+        , on_abort = None StepHook
+        , ensure = None StepHook
         }
       : Put

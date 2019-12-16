@@ -20,67 +20,56 @@ in  { version =
     , params =
         { get =
             { output_format = None Text } : GithubListRepos.params.get.schema
-        , put =
-            {=} : GithubListRepos.params.put.schema
+        , put = {=} : GithubListRepos.params.put.schema
         }
     , source =
         { exclude =
               λ(_params : { auth_token : Text, org : Text })
-            →   { auth_token =
-                    _params.auth_token
-                , org =
-                    _params.org
-                , team =
-                    None Text
-                , exclude_regex =
-                    None Text
-                , exclude =
-                    None (List Text)
+            →   { auth_token = _params.auth_token
+                , org = _params.org
+                , team = None Text
+                , exclude_regex = None Text
+                , exclude = None (List Text)
                 }
               : GithubListRepos.source.exclude.schema
         , include =
               λ ( _params
                 : { auth_token : Text, org : Text, include_regex : Text }
                 )
-            →   { auth_token =
-                    _params.auth_token
-                , org =
-                    _params.org
-                , team =
-                    None Text
-                , include_regex =
-                    _params.include_regex
+            →   { auth_token = _params.auth_token
+                , org = _params.org
+                , team = None Text
+                , include_regex = _params.include_regex
                 }
               : GithubListRepos.source.include.schema
         }
     , meta =
-        { name =
-            name
-        , repository =
-            repository
-        , image_tag =
-            image_tag
+        { name = name
+        , repository = repository
+        , image_tag = image_tag
         , resource_type =
             { docker =
                 ResourceType.schema.DockerImage
-                ( let default =
-                        mkResourceType.DockerImage
-                        { name = name, repository = repository }
-                  
-                  in      default
-                        ⫽ { source = default.source ⫽ { tag = Some image_tag } }
-                      : ResourceType.docker-image.schema
-                )
+                  ( let default =
+                          mkResourceType.DockerImage
+                            { name = name, repository = repository }
+                    
+                    in      default
+                          ⫽ { source = default.source ⫽ { tag = Some image_tag }
+                            }
+                        : ResourceType.docker-image.schema
+                  )
             , registry =
                 ResourceType.schema.RegistryImage
-                ( let default =
-                        mkResourceType.RegistryImage
-                        { name = name, repository = repository }
-                  
-                  in      default
-                        ⫽ { source = default.source ⫽ { tag = Some image_tag } }
-                      : ResourceType.registry-image.schema
-                )
+                  ( let default =
+                          mkResourceType.RegistryImage
+                            { name = name, repository = repository }
+                    
+                    in      default
+                          ⫽ { source = default.source ⫽ { tag = Some image_tag }
+                            }
+                        : ResourceType.registry-image.schema
+                  )
             }
         }
     }

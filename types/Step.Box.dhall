@@ -12,16 +12,10 @@ let Aggregate = { aggregate : List Step }
 
 let Try = { try : Step }
 
-in  < Do :
-        Do
-    | Aggregate :
-        Aggregate
-    | Try :
-        Try
-    | Get :
-        Get
-    | Task :
-        Task
-    | Put :
-        Put
+in  < Do : Do
+    | Aggregate : Aggregate
+    | Try : Try
+    | Get : Get
+    | Task : Task
+    | Put : Put
     >

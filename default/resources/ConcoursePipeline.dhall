@@ -13,8 +13,7 @@ in  { version =
         →   { mapKey = _params.mapKey, mapValue = _params.mapValue }
           : ConcoursePipeline.version.schema
     , params =
-        { get =
-            {=} : ConcoursePipeline.params.get.schema
+        { get = {=} : ConcoursePipeline.params.get.schema
         , put =
             { dynamic =
                   λ(_params : { pipelines_file : Text })
@@ -24,23 +23,18 @@ in  { version =
                   λ ( _params
                     : { pipelines :
                           List
-                          ConcoursePipeline.params.put.static.pipeline.schema
+                            ConcoursePipeline.params.put.static.pipeline.schema
                       }
                     )
                 →   { pipelines = _params.pipelines }
                   : ConcoursePipeline.params.put.static.schema
             , static_pipeline =
                   λ(_params : { name : Text, team : Text, config_file : Text })
-                →   { name =
-                        _params.name
-                    , team =
-                        _params.team
-                    , config_file =
-                        _params.config_file
-                    , vars_files =
-                        None (List Text)
-                    , unpaused =
-                        None Bool
+                →   { name = _params.name
+                    , team = _params.team
+                    , config_file = _params.config_file
+                    , vars_files = None (List Text)
+                    , unpaused = None Bool
                     }
                   : ConcoursePipeline.params.put.static.pipeline.schema
             }
@@ -54,21 +48,19 @@ in  { version =
         →   { name = _params.name, username = None Text, password = None Text }
           : ConcoursePipeline.source.team.schema
     , meta =
-        { name =
-            name
-        , repository =
-            repository
+        { name = name
+        , repository = repository
         , resource_type =
             { docker =
                 ResourceType.schema.DockerImage
-                ( mkResourceType.DockerImage
-                  { name = name, repository = repository }
-                )
+                  ( mkResourceType.DockerImage
+                      { name = name, repository = repository }
+                  )
             , registry =
                 ResourceType.schema.RegistryImage
-                ( mkResourceType.RegistryImage
-                  { name = name, repository = repository }
-                )
+                  ( mkResourceType.RegistryImage
+                      { name = name, repository = repository }
+                  )
             }
         }
     }

@@ -33,8 +33,7 @@ let getType =
               , RegistryImage =
                     λ(_ : Resources.RegistryImage.source.schema)
                   → Defaults.RegistryImage.meta.name
-              , S3 =
-                  λ(_ : Resources.S3.source.schema) → Defaults.S3.meta.name
+              , S3 = λ(_ : Resources.S3.source.schema) → Defaults.S3.meta.name
               , S3Bucket =
                     λ(_ : Resources.S3Bucket.source.schema)
                   → Defaults.S3Bucket.meta.name
@@ -49,19 +48,12 @@ let getType =
         in  merge handlers source : Text
 
 in    λ(_params : { name : Text, source : ResourceSource })
-    →   { name =
-            _params.name
-        , type =
-            getType _params.source
-        , version =
-            None Version
-        , check_every =
-            None Text
-        , tags =
-            None (List Text)
-        , webhook_token =
-            None Text
-        , source =
-            _params.source
+    →   { name = _params.name
+        , type = getType _params.source
+        , version = None Version
+        , check_every = None Text
+        , tags = None (List Text)
+        , webhook_token = None Text
+        , source = _params.source
         }
       : Resource
