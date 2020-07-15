@@ -1,98 +1,79 @@
 # dhall-concourse
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-
 > Dhall types for Concourse
 
-## Notice
-This project is currently dormant.
+## Historical Notice
+This project now contains only the types used by various resource types used in Concourse pipelines. It used to attempt to cover the entire domain of Concourse pipelines, including steps. That work is currently dormant, and is archived under `legacy/`.
 
-Expanding the domain supported by `dhall-concourse` has caused performance to become unbearably slow and expensive. For non-trivial pipelines, parsing times are reaching 40+ minutes and can consume 10+ GB of memory. The slow and expensive performance is due to the increasing numbers of deeply-nested unions being added to the model, and currently, large nested unions are not handled performantly by the Haskell reference implementation.
+Expanding the domain supported by `dhall-concourse` caused performance to become unbearably slow and expensive. For non-trivial pipelines, parsing times reached 40+ minutes and could consume 10+ GB of memory. The slow and expensive performance was due to the increasing numbers of deeply-nested unions being added to the model, and currently, large nested unions are not handled performantly by the Haskell reference implementation.
 
 At such time as a Dhall implementation will mature to the point where working with the model becomes performant, work will resume on this project.
 
 ## Description
 
-This repository includes types, default records, and functions that produce default records in the [Dhall language](https://github.com/dhall-lang/dhall-lang) which model the Concourse CI pipeline domain. They are based off the [Concourse CI documentation reference](https://concourse-ci.org/pipelines.html).
+This repository includes [Dhall](https://github.com/dhall-lang/dhall-lang) schemas which model various resource types in the Concourse CI pipeline domain, which is documented in the [Concourse CI documentation reference](https://concourse-ci.org/pipelines.html).
 
 This allows the user to more easily generate type-safe Concourse CI pipelines, through the use of the Dhall project's `dhall-to-yaml` tool.
 
-### Limitations
-* Various step modifiers have not yet been incorporated into the model: `tags`, `timeout`, and `attempts`.
-* Resources need to be added to the project to be usable. From the benefit of experience of the maintainers, this seems to ultimately be the result of Dhall not (yet) supporting dependent types, and cannot be worked around at this time without losing type safety for each Resource's source, get parameters, and put parameters' types. As a result, this project violates Concourse's [`contributor-burden`](https://github.com/concourse/concourse/wiki/Anti-Patterns#contributor-burden) anti-pattern, and is unlikely to become an official Concourse project. Users who wish to use resources not included in the project are encouraged to open pull requests.
-* The Concourse pipeline models `Step`s as recursive types, as each `Step` record has fields `on_success`, `on_failure`, `on_abort`, and `ensure` of type `Step`. While there is an official [guide](https://github.com/dhall-lang/dhall-lang/wiki/How-to-translate-recursive-code-to-Dhall) that documents a strategy for implementing a recursive type within Dhall's restrictions, currently `dhall-concourse` does not adopt that strategy. Instead, a `Step` has fields of type `StepHook`, and `StepHook`s do not have recursive fields. For the time being, this addresses most use cases while presenting a more-easily addressable API to the user. The project is open to pull requests that offer an additional level of recursion, and may adopt the official strategy for transforming recursive code in the future.
-* There is limited support for the `aggregate`, `do`, and `try` steps. They may be used as "parent steps" for `get`, `put`, and `task` steps under a Job's plan, and under the `on_success`, `on_failure`, `on_abort`, and `ensure` step hooks. Structures like an `aggregate` step having a list of `try` steps is not currently supported, and it is not likely that support for such structures will be introduced until a solution can be found for introducing a recursive step model into the types. 
-
 ### Supported Resources
-* ChartMuseum - [`cathive/concourse-chartmuseum-resource`](https://github.com/cathive/concourse-chartmuseum-resource)
 * Concourse Pipeline - [`concourse/concourse-pipeline-resource`](https://github.com/concourse/concourse-pipeline-resource)
+* Dhall - [`coralogix/eng-concourse-resource-dhall`](https://github.com/coralogix/eng-concourse-resource-dhall)
 * Docker Image - [`concourse/docker-image-resource`](https://github.com/concourse/docker-image-resource)
 * Git - [`concourse/git-resource`](https://github.com/concourse/git-resource)
 * Github List Repos - [`coralogix/eng-concourse-resource-github-list-repos`](https://github.com/coralogix/eng-concourse-resource-github-list-repos)
 * Github PR - [`telia-oss/github-pr-resource`](https://github.com/telia-oss/github-pr-resource)
-* Helm - [`linkyard/concourse-helm-resource`](https://github.com/linkyard/concourse-helm-resource)
+* Git Multibranch - [`cloudfoundry-community/git-multibranch-resource`](https://github.com/cloudfoundry-community/git-multibranch-resource)
 * Registry Image - [`concourse/registry-image-resource`](https://github.com/concourse/registry-image-resource)
 * S3 - [`concourse/s3-resource`](https://github.com/concourse/s3-resource)
 * S3 Bucket - [`18F/s3-resource-simple`](https://github.com/18F/s3-resource-simple)
-* Semver - [`concourse/semver-resource`](https://github.com/concourse/semver-resource)
 * Slack Notification - [`cloudfoundry-community/slack-notification-resource`](https://github.com/cloudfoundry-community/slack-notification-resource)
 
 ## Install
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
+To import everything, use:
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.4.0/package.dhall sha256:a82cb4bdc359bdea12fde89119c6c3e64ccae1392c716106743b9a8a9eb04b4f
 ```
 
-## Usage
-For example - generating the documentation's smallest pipeline example:
+## Intended Usage
+
+The Concourse pipeline schema requires that every `resource_type`, `resource`, `get` step, etc. are exactly the same - except for their `source` and `params` fields, whose contents depend on which resource type is being referred to. The naive way to represent this (for example, for a resource) in Dhall is by writing:
+
 ```dhall
--- hello-world-pipeline.dhall
-
-let Concourse =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/default/package.dhall sha256:8908ad8da681c45af47accf601124608b68c7b08a18795bca579f94161acf3a4
-
-let ConcourseTypes =
-      https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.3.0/types/package.dhall sha256:f45ad5ca29b957eb028b3d7bbb24da2e63ec79cbab5c2042292f7178ec08c6d5
-
-in  Concourse.Pipeline
-    { jobs =
-        [ Concourse.Job
-          { name =
-              "hello-world"
-          , plan =
-              [ ConcourseTypes.StepBox.Task
-                (   Concourse.Task
-                    { task = "say-hello" }
-                  ⫽ { config =
-                        Some
-                        (   Concourse.TaskConfig
-                            { platform =
-                                "linux"
-                            , run =
-                                  Concourse.TaskConfigRun { path = "echo" }
-                                ⫽ { args = Some [ "Hello, world!" ] }
-                            }
-                          ⫽ { image_resource =
-                                Some
-                                ( ConcourseTypes.TaskConfigImageResource.schema.DockerImage
-                                  ( Concourse.TaskConfigDockerImageResource
-                                    { repository = "alpine" }
-                                  )
-                                )
-                            }
-                        )
-                    }
-                )
-              ]
-          }
-        ]
-    }
+let Resource =
+  { name : Text
+  , type : Text
+  , source : ?
+  -- other fields
+  }
+in Resource
 ```
-### CLI
-```bash
-dhall-to-yaml --omitNull <<< './hello-world-pipeline.dhall' > hello-world-pipeline.yaml
-fly -t main set-pipeline -p hello-world -c ./hello-world-pipeline.yaml 
+
+This introduces a question - what should the type of the `source` field be? Maintaining the union of all of the possibilities of the `source` field becomes tedious. But putting a union of every possible alternative, of every possible resource type in existence, would make the resulting normal form too large to be performant (even if it were possible to maintain them all in a single repository).
+
+This repository allows the user to construct the type of `Resource` and of `ResourceType` based on a union that the downstream user constructs, consisting only of the resource types which the downstream user actually uses in their pipeline. This solves both the code-reusage problem, and keeps the implementation performant. For example:
+
+```dhall
+let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.4.0/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
+
+let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.4.0/resource-types/S3.dhall sha256:6e062defd2cf94a3f7840d1b09c7a832d0a92467f5924a2b812843c053a8eca5
+
+let Source = < Git : Git.Source.Type | S3 : S3.Source.Type >
+
+let Version = < Git : Git.Version.Type | S3 : S3.Version.Type >
+
+let Resource =
+   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.4.0/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
+
+   in import { Source, Version }
+
+in  Resource::{
+    , name = "example-repository"
+    , type = Git.meta.name
+    , source =
+        Source.Git
+          Git.Source::{ uri = "git@github.com:example/example.git" }
+    }
 ```
 
 ## Maintainers
