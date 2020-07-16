@@ -38,8 +38,8 @@ let Run =
       }
 
 let ContainerLimits =
-      { Type = { cpu : Optional Integer, memory : Optional Integer }
-      , default = { cpu = None Integer, memory = None Integer }
+      { Type = { cpu : Optional Natural, memory : Optional Natural }
+      , default = { cpu = None Natural, memory = None Natural }
       }
 
 let Config

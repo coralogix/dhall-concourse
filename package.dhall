@@ -11,7 +11,7 @@
       ./Step.dhall sha256:496795f751710c5feb68f8e70f685a095e81d826d9e376359609103b966266de
     ? ./Step.dhall
 , Task =
-      ./Task.dhall sha256:d48a3c01812e363ce34a0928373c21658b92600e9e066a0c73014f4beefd61a4
+      ./Task.dhall sha256:8b7677ec0ce7822074fc4e86ad3d2080379c59305d8be4971bec532468a680e6
     ? ./Task.dhall
 , Job =
       ./Job.dhall sha256:84f8d5a8a81dae106a85655bd94a4469290222587ca07913907b39a7ebda5f6f
