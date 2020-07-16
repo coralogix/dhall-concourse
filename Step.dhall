@@ -262,10 +262,12 @@ let LoadVar
 let InParallel
     : ∀(_params : HookParams ⩓ { step : Type }) →
         { Type : Type
+        , Config :
+            { Type : Type
+            , default : { limit : Optional Natural, fail_fast : Optional Bool }
+            }
         , default :
-            { limit : Optional Natural
-            , fail_fast : Optional Bool
-            , timeout : Optional Text
+            { timeout : Optional Text
             , attempts : Optional Natural
             , tags : Optional (List Text)
             , on_success : Optional _params.on_success
@@ -280,14 +282,18 @@ let InParallel
               Hooks
                 _params.{ on_success, on_failure, on_abort, on_error, ensure }
 
-        in  { Type =
+        let Config =
+              { Type =
                   { steps : List _params.step
                   , limit : Optional Natural
                   , fail_fast : Optional Bool
                   }
-                ⩓ Hooks.Type
-            , default =
-                { limit = None Natural, fail_fast = None Bool } ∧ Hooks.default
+              , default = { limit = None Natural, fail_fast = None Bool }
+              }
+
+        in  { Type = { in_parallel : Config.Type } ⩓ Hooks.Type
+            , Config
+            , default = Hooks.default
             }
 
 let Do
