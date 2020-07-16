@@ -2,16 +2,9 @@
 
 > Dhall types for Concourse
 
-## Historical Notice
-This project now contains only the types used by various resource types used in Concourse pipelines. It used to attempt to cover the entire domain of Concourse pipelines, including steps. That work is currently dormant, and is archived under `legacy/`.
-
-Expanding the domain supported by `dhall-concourse` caused performance to become unbearably slow and expensive. For non-trivial pipelines, parsing times reached 40+ minutes and could consume 10+ GB of memory. The slow and expensive performance was due to the increasing numbers of deeply-nested unions being added to the model, and currently, large nested unions are not handled performantly by the Haskell reference implementation.
-
-At such time as a Dhall implementation will mature to the point where working with the model becomes performant, work will resume on this project.
-
 ## Description
 
-This repository includes [Dhall](https://github.com/dhall-lang/dhall-lang) schemas which model various resource types in the Concourse CI pipeline domain, which is documented in the [Concourse CI documentation reference](https://concourse-ci.org/pipelines.html).
+This repository includes [Dhall](https://github.com/dhall-lang/dhall-lang) schemas which model the Concourse CI pipeline domain, which is documented in the [Concourse CI documentation reference](https://concourse-ci.org/pipelines.html).
 
 This allows the user to more easily generate type-safe Concourse CI pipelines, through the use of the Dhall project's `dhall-to-yaml` tool.
 
@@ -32,10 +25,12 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 To import everything, use:
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.4.1/package.dhall sha256:81248461666b43b3797acf6feebe200a7da225669c95024f5312330302818483
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.5.0/package.dhall sha256:7e130a8a6dac03d725a4b834ec95370da6ca32393266cec94fa00a79f6331e0c
 ```
 
 ## Intended Usage
+
+### Resources
 
 The Concourse pipeline schema requires that every `resource_type`, `resource`, `get` step, etc. are exactly the same - except for their `source` and `params` fields, whose contents depend on which resource type is being referred to. The naive way to represent this (for example, for a resource) in Dhall is by writing:
 
@@ -75,6 +70,13 @@ in  Resource::{
           Git.Source::{ uri = "git@github.com:example/example.git" }
     }
 ```
+
+### Steps
+
+Steps follow the same model as Resources, except that instead of providing `Source` and `Version` as parameters, instead the types for `on_success`, `on_failure`, etc. must be provided as parameters.
+This solves the issue in the Concourse pipeline domain where Steps are recursive types, which are not natively supported by Dhall (as Dhall guarantees totality). At the "end of the recursion", so to speak, when the generated pipeline should not provide an `on_success`, etc., then the type that should be provided to the function should be `<>` (which is Dhall's closest equivalent to a `Void` type).
+
+As resources, resource types, and steps are types constructed by the downstream user, so too are helper functions provided to construct the types for jobs and pipelines.
 
 ## Maintainers
 [Ari Becker](https://github.com/ari-becker)
