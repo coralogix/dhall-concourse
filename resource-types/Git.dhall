@@ -38,7 +38,7 @@
             { Type =
                 { repository : Text
                 , rebase : Optional Bool
-                , merge : Optional Bool
+                , `merge` : Optional Bool
                 , returning : Optional Text
                 , tag : Optional Text
                 , only_tag : Optional Bool
@@ -49,7 +49,7 @@
                 }
             , default =
               { rebase = None Bool
-              , merge = None Bool
+              , `merge` = None Bool
               , returning = None Text
               , tag = None Text
               , only_tag = None Bool
