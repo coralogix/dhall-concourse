@@ -20,12 +20,13 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 * S3 - [`concourse/s3-resource`](https://github.com/concourse/s3-resource)
 * S3 Bucket - [`18F/s3-resource-simple`](https://github.com/18F/s3-resource-simple)
 * Slack Notification - [`cloudfoundry-community/slack-notification-resource`](https://github.com/cloudfoundry-community/slack-notification-resource)
+* Time - [`concourse/time-resource`](https://github.com/concourse/time-resource)
 
 ## Install
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 To import everything, use:
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.5.2/package.dhall sha256:0941f560f213ef8fb89ca3258fcc1a013bfa08f6bf2ff320e592e7f116bc81c5
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.0/package.dhall sha256:22b1cdb4a35dcac29a2da536f5c51a4b31d4c4dd71268756b054738afaae1da2
 ```
 
 ## Intended Usage
@@ -49,16 +50,16 @@ This introduces a question - what should the type of the `source` field be? Main
 This repository allows the user to construct the type of `Resource` and of `ResourceType` based on a union that the downstream user constructs, consisting only of the resource types which the downstream user actually uses in their pipeline. This solves both the code-reusage problem, and keeps the implementation performant. For example:
 
 ```dhall
-let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.5.2/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
+let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.0/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
 
-let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.5.2/resource-types/S3.dhall sha256:6e062defd2cf94a3f7840d1b09c7a832d0a92467f5924a2b812843c053a8eca5
+let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.0/resource-types/S3.dhall sha256:6e062defd2cf94a3f7840d1b09c7a832d0a92467f5924a2b812843c053a8eca5
 
 let Source = < Git : Git.Source.Type | S3 : S3.Source.Type >
 
 let Version = < Git : Git.Version.Type | S3 : S3.Version.Type >
 
 let Resource =
-   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.5.2/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
+   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.0/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
 
    in import { Source, Version }
 
