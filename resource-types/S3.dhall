@@ -1,5 +1,20 @@
 { meta = { name = "s3", repository = "concourse/s3-resource" }
-, Version.Type = < VersionID : { version_id : Text } | Path : { path : Text } >
+, Version =
+    let Options =
+          let VersionID = { version_id : Text }
+
+          let Path = { path : Text }
+
+          in  { VersionID, Path }
+
+    let Version = < VersionID : Options.VersionID | Path : Options.Path >
+
+    in  { Type = Version
+        , VersionID =
+            λ(version_id : Options.VersionID) → Version.VersionID version_id
+        , Path = λ(path : Options.Path) → Version.Path path
+        , Options
+        }
 , Params =
   { Get =
       let Get =

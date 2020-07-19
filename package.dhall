@@ -1,5 +1,5 @@
 { resource-types =
-      ./resource-types/package.dhall sha256:ab5a48fb1b46c887ff3448a7ca722bf98e4aa312b67abe436e76407707262f19
+      ./resource-types/package.dhall sha256:19713724811bedcdbbaf2e3475877337f4c63582c36c91ecfc4e90a9f6eb694e
     ? ./resource-types/package.dhall
 , Resource =
       ./Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
