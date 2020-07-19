@@ -31,4 +31,7 @@
 , SlackNotification =
       ./SlackNotification.dhall sha256:637b51d4ea5273e22d60c4c3dcee9ebc87e4316254abcf1c4ba27fe7d9cc720f
     ? ./SlackNotification.dhall
+, Time =
+      ./Time.dhall sha256:31a94594fb11d939559befed5307954463d9832fc0c9e085455ebb08689932e2
+    ? ./Time.dhall
 }
