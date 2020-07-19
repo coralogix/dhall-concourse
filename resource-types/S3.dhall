@@ -1,5 +1,5 @@
 { meta = { name = "s3", repository = "concourse/s3-resource" }
-, Version = { Type = { version_id : Text }, default = {=} }
+, Version.Type = < VersionID : { version_id : Text } | Path : { path : Text } >
 , Params =
   { Get =
       let Get =

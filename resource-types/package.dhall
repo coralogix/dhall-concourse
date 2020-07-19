@@ -23,7 +23,7 @@
       ./RegistryImage.dhall sha256:2ca4df79f82f54275f919d759344a6478749f7d0f32bddbc0389877ede11da03
     ? ./RegistryImage.dhall
 , S3 =
-      ./S3.dhall sha256:6e062defd2cf94a3f7840d1b09c7a832d0a92467f5924a2b812843c053a8eca5
+      ./S3.dhall sha256:1bf327b7abcfb70a3cd0dea52564df31f59094ae5698bcb19c8de191e437ccab
     ? ./S3.dhall
 , S3Bucket =
       ./S3Bucket.dhall sha256:fc95953a8603a450c4e34b7394714332ede9759436256f153d00a829fddccc31
