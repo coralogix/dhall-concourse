@@ -15,6 +15,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 * Git - [`concourse/git-resource`](https://github.com/concourse/git-resource)
 * Github List Repos - [`coralogix/eng-concourse-resource-github-list-repos`](https://github.com/coralogix/eng-concourse-resource-github-list-repos)
 * Github PR - [`telia-oss/github-pr-resource`](https://github.com/telia-oss/github-pr-resource)
+* Github Release - [`concourse/github-release-resource`](https://github.com/concourse/github-release-resource)
 * Git Multibranch - [`cloudfoundry-community/git-multibranch-resource`](https://github.com/cloudfoundry-community/git-multibranch-resource)
 * Registry Image - [`concourse/registry-image-resource`](https://github.com/concourse/registry-image-resource)
 * S3 - [`concourse/s3-resource`](https://github.com/concourse/s3-resource)
@@ -26,7 +27,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 To import everything, use:
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.1/package.dhall sha256:ab25d95aaf255b8fc9572b58650c1850c9a4395d411576ced75611b893561c16
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/package.dhall sha256:d2f16eefdd12b916b517b538e789bc87ec2d7ebf7c78fb6292802038a53c0cd6
 ```
 
 ## Intended Usage
@@ -50,16 +51,16 @@ This introduces a question - what should the type of the `source` field be? Main
 This repository allows the user to construct the type of `Resource` and of `ResourceType` based on a union that the downstream user constructs, consisting only of the resource types which the downstream user actually uses in their pipeline. This solves both the code-reusage problem, and keeps the implementation performant. For example:
 
 ```dhall
-let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.1/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
+let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
 
-let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.1/resource-types/S3.dhall sha256:d9129408caf467ffa23f16470313cb58d4725687d26e043ee015c75b87f3c679
+let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/resource-types/S3.dhall sha256:d9129408caf467ffa23f16470313cb58d4725687d26e043ee015c75b87f3c679
 
 let Source = < Git : Git.Source.Type | S3 : S3.Source.Type >
 
 let Version = < Git : Git.Version.Type | S3 : S3.Version.Type >
 
 let Resource =
-   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.6.1/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
+   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
 
    in import { Source, Version }
 
