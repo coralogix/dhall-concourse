@@ -19,6 +19,9 @@
 , GithubPR =
       ./GithubPR.dhall sha256:34fc7517dff51abc3ecfcf879506940e76e5339c893e5f6ade0d025bb992b2cc
     ? ./GithubPR.dhall
+, GithubRelease =
+      ./GithubRelease.dhall sha256:1b782f3c5b49ccce426bb3364add8290aa83e267da5af95b5493ba2038f5ab36
+    ? ./GithubRelease.dhall
 , RegistryImage =
       ./RegistryImage.dhall sha256:2ca4df79f82f54275f919d759344a6478749f7d0f32bddbc0389877ede11da03
     ? ./RegistryImage.dhall
