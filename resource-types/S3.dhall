@@ -19,12 +19,22 @@
   { Get =
       let Get =
             { Type =
-                { skip_download : Optional Bool
+                { skip_download :
+                    let type =
+                        {- the resource expects either "true" or "false"
+                        -- as a string, keeping it as a boolean value results
+                        -- in a Go parsing error when the resource tries to
+                        -- parse the bool. The two valid values are "true"
+                        -- or "false".
+                        -}
+                          Optional Text
+
+                    in  type
                 , unpack : Optional Bool
                 , download_tags : Optional Bool
                 }
             , default =
-              { skip_download = None Bool
+              { skip_download = None Text
               , unpack = None Bool
               , download_tags = None Bool
               }
