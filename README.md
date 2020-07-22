@@ -27,7 +27,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 For stability, users are encouraged to import from a tagged release, not from the master branch, and to watch for new releases. This project does not yet have rigorous testing set up for it and new commits on the master branch are prone to break compatibility and are almost sure to change the import hash for the expression, thus the releases are currently `v0.x`.
 To import everything, use:
 ```
-https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/package.dhall sha256:d2f16eefdd12b916b517b538e789bc87ec2d7ebf7c78fb6292802038a53c0cd6
+https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.1/package.dhall sha256:d71d5c614768ab1abd898f328b26b137aa9118b22780ccb4dcf6a8e4f8a528d9
 ```
 
 ## Intended Usage
@@ -51,16 +51,16 @@ This introduces a question - what should the type of the `source` field be? Main
 This repository allows the user to construct the type of `Resource` and of `ResourceType` based on a union that the downstream user constructs, consisting only of the resource types which the downstream user actually uses in their pipeline. This solves both the code-reusage problem, and keeps the implementation performant. For example:
 
 ```dhall
-let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
+let Git = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.1/resource-types/Git.dhall sha256:830b9d7d0e9e0992ee2473f78e05838a86be3e13c7bcf5df661b8829dbc3d558
 
-let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/resource-types/S3.dhall sha256:d9129408caf467ffa23f16470313cb58d4725687d26e043ee015c75b87f3c679
+let S3 = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.1/resource-types/S3.dhall sha256:b49ec06747630f6d6951fde4f04f7bbffab7cee1a9ef299464314ad049422d04
 
 let Source = < Git : Git.Source.Type | S3 : S3.Source.Type >
 
 let Version = < Git : Git.Version.Type | S3 : S3.Version.Type >
 
 let Resource =
-   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.0/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
+   let import = https://raw.githubusercontent.com/coralogix/dhall-concourse/v0.7.1/Resource.dhall sha256:206f784b14f3fb78809bafffbde955fbc177ca0427c8fe9cf4a983a8aaf463c1
 
    in import { Source, Version }
 
