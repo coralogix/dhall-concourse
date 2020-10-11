@@ -18,6 +18,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 * Github Release - [`concourse/github-release-resource`](https://github.com/concourse/github-release-resource)
 * Git Multibranch - [`cloudfoundry-community/git-multibranch-resource`](https://github.com/cloudfoundry-community/git-multibranch-resource)
 * Helm 3 - [`Typositoire/concourse-helm3-resource`](https://github.com/Typositoire/concourse-helm3-resource)
+* Kops - [`coralogix/eng-concourse-resource-kops`](https://github.com/coralogix/eng-concourse-resource-kops)
 * Registry Image - [`concourse/registry-image-resource`](https://github.com/concourse/registry-image-resource)
 * S3 - [`concourse/s3-resource`](https://github.com/concourse/s3-resource)
 * S3 Bucket - [`18F/s3-resource-simple`](https://github.com/18F/s3-resource-simple)
