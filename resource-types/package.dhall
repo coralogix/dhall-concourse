@@ -40,4 +40,7 @@
 , Time =
       ./Time.dhall sha256:31a94594fb11d939559befed5307954463d9832fc0c9e085455ebb08689932e2
     ? ./Time.dhall
+, Kops =
+      ./Kops.dhall sha256:3b3a0a12571d7bcaa892d4f5b517a13be7f951a33c53ae77e346286cf8084b37
+    ? ./Kops.dhall
 }
