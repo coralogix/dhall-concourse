@@ -22,6 +22,9 @@
 , GithubRelease =
       ./GithubRelease.dhall sha256:1b782f3c5b49ccce426bb3364add8290aa83e267da5af95b5493ba2038f5ab36
     ? ./GithubRelease.dhall
+, Helm3 =
+      ./Helm3.dhall sha256:b105c98ee64027bc50deaea0951da2a8b235a43a5af3e9f4720bd2a57bda5474
+    ? ./Helm3.dhall
 , RegistryImage =
       ./RegistryImage.dhall sha256:2ca4df79f82f54275f919d759344a6478749f7d0f32bddbc0389877ede11da03
     ? ./RegistryImage.dhall
