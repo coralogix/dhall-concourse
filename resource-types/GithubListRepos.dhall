@@ -11,22 +11,31 @@
   , Put = { Type = {}, default = {=} }
   }
 , Source =
+    let Common =
+          { Type =
+              { auth_token : Text
+              , org : Text
+              , team : Optional Text
+              , v4_endpoint : Optional Text
+              , include_archived : Optional Bool
+              }
+          , default =
+            { team = None Text
+            , v4_endpoint = None Text
+            , include_archived = None Bool
+            }
+          }
+
     let Exclude =
           let Exclude =
                 { Type =
-                    { auth_token : Text
-                    , org : Text
-                    , team : Optional Text
-                    , v4_endpoint : Optional Text
-                    , exclude_regex : Optional Text
-                    , exclude : Optional (List Text)
-                    }
+                      Common.Type
+                    ⩓ { exclude_regex : Optional Text
+                      , exclude : Optional (List Text)
+                      }
                 , default =
-                  { team = None Text
-                  , v4_endpoint = None Text
-                  , exclude_regex = None Text
-                  , exclude = None (List Text)
-                  }
+                      Common.default
+                    ∧ { exclude_regex = None Text, exclude = None (List Text) }
                 }
 
           let test = Exclude::{ auth_token = "test", org = "test" }
@@ -35,14 +44,8 @@
 
     let Include =
           let Include =
-                { Type =
-                    { auth_token : Text
-                    , org : Text
-                    , team : Optional Text
-                    , v4_endpoint : Optional Text
-                    , include_regex : Text
-                    }
-                , default = { team = None Text, v4_endpoint = None Text }
+                { Type = Common.Type ⩓ { include_regex : Text }
+                , default = Common.default
                 }
 
           let test =

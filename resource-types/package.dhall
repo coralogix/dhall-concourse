@@ -14,7 +14,7 @@
       ./GitMultibranch.dhall sha256:98145e49333017e27c759b3bb02aeaefc14dc89b207afd74d2c1ebdc64a59b48
     ? ./GitMultibranch.dhall
 , GithubListRepos =
-      ./GithubListRepos.dhall sha256:ccef397287d7c01c9243c517b8f407a68299bdc2f6ad8386410194e9dfd2e3e0
+      ./GithubListRepos.dhall sha256:b2f43a53a911c4fa0effbb810256d94bf621f2e2f57c067dea71b65eb224cbce
     ? ./GithubListRepos.dhall
 , GithubPR =
       ./GithubPR.dhall sha256:34fc7517dff51abc3ecfcf879506940e76e5339c893e5f6ade0d025bb992b2cc
