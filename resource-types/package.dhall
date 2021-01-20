@@ -1,6 +1,9 @@
 { ConcoursePipeline =
       ./ConcoursePipeline.dhall sha256:e2229add33a80283eb3c1c29f91c2a6cdc9e90a2ded04048d221c5d53048ccb0
     ? ./ConcoursePipeline.dhall
+, CoralogixEvent =
+      ./CoralogixEvent.dhall sha256:c32bedf3eda23d4d7ca10184211d114c809ecf6d61e002f386cf99aad8dc0d27
+    ? ./CoralogixEvent.dhall
 , Dhall =
       ./Dhall.dhall sha256:49dab2ab893b7a4a0e1e39bbe3e28f383f5079e89fe143d1a694c38835cc566b
     ? ./Dhall.dhall
