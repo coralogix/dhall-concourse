@@ -26,7 +26,7 @@
       ./GithubRelease.dhall sha256:1b782f3c5b49ccce426bb3364add8290aa83e267da5af95b5493ba2038f5ab36
     ? ./GithubRelease.dhall
 , GithubStatus =
-      ./GithubStatus.dhall sha256:33cd0901fe7719f821a43bb9f60dc27ba5ac77360f9ab202a88536753021ac33
+      ./GithubStatus.dhall sha256:386931b4d5af36df90523b09e4f99b2da1eb172a713860c72d1d253b07545b6f
     ? ./GithubStatus.dhall
 , Helm3 =
       ./Helm3.dhall sha256:b105c98ee64027bc50deaea0951da2a8b235a43a5af3e9f4720bd2a57bda5474

@@ -1,5 +1,5 @@
 { meta = { name = "github-status", repository = "resource/github-status" }
-, Version = { Type = {}, default = {=} }
+, Version = { Type = { `context@sha` : Text }, default = {=} }
 , Params =
   { Get =
     { Type = { path : Text, context : Optional Text }
@@ -23,23 +23,25 @@
       let Statuses =
             { Type = { path : Text, statuses : List StatusObject.Type }
             , default = {=}
+            , StatusObject
             }
 
       let Status =
             { Type = { path : Text } ⩓ StatusObject.Type
-            , default =
-              { context = None Text
-              , description = None Text
-              , target_url = None Text
-              }
+            , default = StatusObject.default
             }
 
       let Put =
-              { Type = < Status : Status.Type | Statuses : Statuses.Type > }
-            ∧ { StatusObject, Status, Statuses }
+            let Put = < Status : Status.Type | Statuses : Statuses.Type >
+
+            in  { Type = Put
+                , Status = λ(status : Status.Type) → Put.Status status
+                , Statuses = λ(statuses : Statuses.Type) → Put.Statuses statuses
+                , Options = { Status, Statuses }
+                }
 
       let test =
-            Put.Type.Status Put.Status::{ path = "test", state = "successs" }
+            Put.Status Put.Options.Status::{ path = "test", state = "successs" }
 
       in  Put
   }
