@@ -6,41 +6,42 @@
     , default.context = None Text
     }
   , Put =
-    { Type =
-        let StatusObject =
-              { Type =
-                  { state : Text
-                  , context : Optional Text
-                  , description : Optional Text
-                  , target_url : Optional Text
-                  }
-              , default =
-                { context = None Text
-                , description = None Text
-                , target_url = None Text
+      let StatusObject =
+            { Type =
+                { state : Text
+                , context : Optional Text
+                , description : Optional Text
+                , target_url : Optional Text
                 }
+            , default =
+              { context = None Text
+              , description = None Text
+              , target_url = None Text
               }
-
-        let Statuses =
-              { Type = { path : Text, statuses : List StatusObject.Type }
-              , default = {=}
-              }
-
-        let Status =
-              { Type = { path : Text } ⩓ StatusObject.Type
-              , default =
-                { context = None Text
-                , description = None Text
-                , target_url = None Text
-                }
-              }
-
-        in  { Type = < Status : Status.Type | Statuses : Statuses.Type >
-            , StatusObject
-            , Statuses
             }
-    , default = {=}
-    }
+
+      let Statuses =
+            { Type = { path : Text, statuses : List StatusObject.Type }
+            , default = {=}
+            }
+
+      let Status =
+            { Type = { path : Text } ⩓ StatusObject.Type
+            , default =
+              { context = None Text
+              , description = None Text
+              , target_url = None Text
+              }
+            }
+
+      let Put =
+              { Type = < Status : Status.Type | Statuses : Statuses.Type > }
+            ∧ { StatusObject, Status, Statuses }
+
+      let test =
+            Put.Type.Status Put.Status::{ path = "test", state = "successs" }
+
+      in  Put
   }
 , Source =
     let Source = { Type = { repo : Text, access_token : Text }, default = {=} }
