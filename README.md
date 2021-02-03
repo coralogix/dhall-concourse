@@ -17,6 +17,7 @@ This allows the user to more easily generate type-safe Concourse CI pipelines, t
 * Github List Repos - [`coralogix/eng-concourse-resource-github-list-repos`](https://github.com/coralogix/eng-concourse-resource-github-list-repos)
 * Github PR - [`telia-oss/github-pr-resource`](https://github.com/telia-oss/github-pr-resource)
 * Github Release - [`concourse/github-release-resource`](https://github.com/concourse/github-release-resource)
+* Github Status - [`resource/github-status`](https://github.com/colstrom/concourse-github-status)
 * Git Multibranch - [`cloudfoundry-community/git-multibranch-resource`](https://github.com/cloudfoundry-community/git-multibranch-resource)
 * Helm 3 - [`Typositoire/concourse-helm3-resource`](https://github.com/Typositoire/concourse-helm3-resource)
 * Kops - [`coralogix/eng-concourse-resource-kops`](https://github.com/coralogix/eng-concourse-resource-kops)
