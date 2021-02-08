@@ -65,6 +65,7 @@
                 , wait : Optional Natural
                 , kubeconfig_path : Optional Text
                 , show_diff : Optional Bool
+                , skip_missing_values : Optional Bool
                 }
             , default =
               { namespace = None Text
@@ -88,6 +89,7 @@
               , wait = None Natural
               , kubeconfig_path = None Text
               , show_diff = None Bool
+              , skip_missing_values = None Bool
               }
             }
 
