@@ -29,7 +29,7 @@
       ./GithubStatus.dhall sha256:386931b4d5af36df90523b09e4f99b2da1eb172a713860c72d1d253b07545b6f
     ? ./GithubStatus.dhall
 , Helm3 =
-      ./Helm3.dhall sha256:b105c98ee64027bc50deaea0951da2a8b235a43a5af3e9f4720bd2a57bda5474
+      ./Helm3.dhall sha256:fb8599b3b370c15e355603276a65f65727be74b1979e0a875ec5c2c784e11713
     ? ./Helm3.dhall
 , RegistryImage =
       ./RegistryImage.dhall sha256:2ca4df79f82f54275f919d759344a6478749f7d0f32bddbc0389877ede11da03
