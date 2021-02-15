@@ -95,7 +95,7 @@
 
       let test = Put::{ chart = "test" }
 
-      in  Put
+      in  Put ∧ { OverrideValue, Values }
   }
 , Source =
     let Plugin =
