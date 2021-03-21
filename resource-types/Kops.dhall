@@ -9,7 +9,7 @@
     let Source =
           { Type =
               { aws_access_key_id : Text
-              , aws_access_secret_key : Text
+              , aws_secret_access_key : Text
               , cluster : Text
               , state_bucket : Text
               }
@@ -19,7 +19,7 @@
     let test =
           Source::{
           , aws_access_key_id = "AWS Access Key ID"
-          , aws_access_secret_key = "AWS Access Secret Key"
+          , aws_secret_access_key = "AWS Access Secret Key"
           , cluster = "mycluster.k8s.cluster.local"
           , state_bucket = "s3://my-state-bucket"
           }
