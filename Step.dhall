@@ -189,6 +189,7 @@ let SetPipeline
             { file : Optional Text
             , vars : Optional (List { mapKey : Text, mapValue : Text })
             , var_files : Optional (List Text)
+            , instance_vars : Optional (List { mapKey : Text, mapValue : Text })
             , team : Optional Text
             , timeout : Optional Text
             , attempts : Optional Natural
@@ -210,6 +211,8 @@ let SetPipeline
                   , file : Optional Text
                   , vars : Optional (List { mapKey : Text, mapValue : Text })
                   , var_files : Optional (List Text)
+                  , instance_vars :
+                      Optional (List { mapKey : Text, mapValue : Text })
                   , team : Optional Text
                   }
                 ⩓ Hooks.Type
@@ -217,6 +220,8 @@ let SetPipeline
                   { file = None Text
                   , vars = None (List { mapKey : Text, mapValue : Text })
                   , var_files = None (List Text)
+                  , instance_vars =
+                      None (List { mapKey : Text, mapValue : Text })
                   , team = None Text
                   }
                 ∧ Hooks.default

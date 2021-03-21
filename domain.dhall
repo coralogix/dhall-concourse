@@ -5,7 +5,7 @@
       ./ResourceType.dhall sha256:41ead24540852689f7d08893e4f354358a26696b1d96762e5b188615a031cc06
     ? ./ResourceType.dhall
 , Step =
-      ./Step.dhall sha256:496795f751710c5feb68f8e70f685a095e81d826d9e376359609103b966266de
+      ./Step.dhall sha256:7c6da76f543a87dcdd793b87937cf6854851547e1f8b3b81c7f7f5b01d413cef
     ? ./Step.dhall
 , Task =
       ./Task.dhall sha256:8b7677ec0ce7822074fc4e86ad3d2080379c59305d8be4971bec532468a680e6
