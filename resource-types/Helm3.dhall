@@ -41,6 +41,8 @@
                 , Options
                 }
 
+      let EnvVar = { key : Text, value : Text }
+
       let Put =
             { Type =
                 { chart : Text
@@ -66,6 +68,8 @@
                 , kubeconfig_path : Optional Text
                 , show_diff : Optional Bool
                 , skip_missing_values : Optional Bool
+                , post_renderer : Optional Bool
+                , env_vars : Optional (List EnvVar)
                 }
             , default =
               { namespace = None Text
@@ -90,12 +94,14 @@
               , kubeconfig_path = None Text
               , show_diff = None Bool
               , skip_missing_values = None Bool
+              , post_renderer = None Bool
+              , env_vars = None (List EnvVar)
               }
             }
 
       let test = Put::{ chart = "test" }
 
-      in  Put ∧ { OverrideValue, Values }
+      in  Put ∧ { OverrideValue, Values, EnvVar }
   }
 , Source =
     let Plugin =
