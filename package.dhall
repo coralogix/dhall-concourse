@@ -1,7 +1,7 @@
   { resource-types =
-        ./resource-types/package.dhall sha256:03db6af8ae63aa6aaab35efdc86e7cc8aac2938c908b704faca29087223e3cdd
+        ./resource-types/package.dhall sha256:6fe23bc9227d1822e9a1df0f365e97ebf22c2469e3c892b177d1f9c1464dfb8f
       ? ./resource-types/package.dhall
   }
-∧ (   ./domain.dhall sha256:036b9de47a7f54d4ed21b87c50987fb8a318c62524d7f6317d3ec98bbe9c784c
+∧ (   ./domain.dhall sha256:56c38498a9f9ed945c76a1e8e880532151666850e78e82c05f4a56bcebeee00f
     ? ./domain.dhall
   )
