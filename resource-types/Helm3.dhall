@@ -41,7 +41,7 @@
                 , Options
                 }
 
-      let EnvVar = { key : Text, value : Text }
+      let EnvVar = { mapKey : Text, mapValue : Text }
 
       let Put =
             { Type =
@@ -68,7 +68,7 @@
                 , kubeconfig_path : Optional Text
                 , show_diff : Optional Bool
                 , skip_missing_values : Optional Bool
-                , post_renderer : Optional Bool
+                , post_renderer : Optional Text
                 , env_vars : Optional (List EnvVar)
                 }
             , default =
@@ -94,7 +94,7 @@
               , kubeconfig_path = None Text
               , show_diff = None Bool
               , skip_missing_values = None Bool
-              , post_renderer = None Bool
+              , post_renderer = None Text
               , env_vars = None (List EnvVar)
               }
             }
