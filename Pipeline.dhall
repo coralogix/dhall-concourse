@@ -14,7 +14,7 @@ let Pipeline
             , resources : Optional (List _params.resource)
             , resource_types : Optional (List _params.resource_type)
             , var_sources : Optional (List _params.var_source)
-            , groups : Optional Group.Type
+            , groups : Optional (List Group.Type)
             }
         }
     = λ ( _params
@@ -29,14 +29,14 @@ let Pipeline
             , resources : Optional (List _params.resource)
             , resource_types : Optional (List _params.resource_type)
             , var_sources : Optional (List _params.var_source)
-            , groups : Optional Group.Type
+            , groups : Optional (List Group.Type)
             }
         , default =
           { jobs = None (List _params.job)
           , resources = None (List _params.resource)
           , resource_types = None (List _params.resource_type)
           , var_sources = None (List _params.var_source)
-          , groups = None Group.Type
+          , groups = None (List Group.Type)
           }
         }
 
