@@ -17,7 +17,7 @@
       ./Group.dhall sha256:9531fd9c8bfbd69c94798d00093481d5266384bd6eed2dc3d76713d7e7a56c41
     ? ./Group.dhall
 , Pipeline =
-      ./Pipeline.dhall sha256:deb570e2d436b729ecfdf5f2a3fb96baa84321ce9950da95d4f412085cedca78
+      ./Pipeline.dhall sha256:8a6d987461f41854d5ce5e21fa513390391ce51ecdea103554ce65ba92801c93
     ? ./Pipeline.dhall
 , VarSource =
       ./VarSource.dhall sha256:d40e04bc69b0ccb965bfeb14cd7c7f33b3c99636f4a75771115030d27775a655
